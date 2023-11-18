@@ -18,14 +18,22 @@ android {
             abiFilters "armeabi-v7a", "x86_64"
         }
         python {
-            version "3.11"
-            buildPython "C:/Program Files/Python311/python.exe"
+            version "3.8"
+           // buildPython "C:/Program Files/Python311/python.exe"
+            buildPython "C:/Program Files/Python38/python.exe"
             pip {
-
+                install "nltk"
                 install "newspaper3k"
-                install "lxml==4.6.3"
+                install "spacy"
+                install "textblob"
+                install "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.0/en_core_web_sm-2.2.0.tar.gz"
             }
+
         }
+        sourceSets {
+            main {
+                python.srcDir "src/main/python"
+            }
     }
 
     buildTypes {
@@ -38,21 +46,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    sourceSets {
-        main {
-            python.srcDir "src/main/python"
-        }
+
     }
 }
 
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.10.0'
+    //implementation 'com.google.android.material:material:1.10.0'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'com.github.KwabenBerko:News-API-Java:1.0.2'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
