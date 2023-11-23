@@ -1,7 +1,5 @@
 package com.example.newssummary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +7,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
-
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class NewsFullActivity extends AppCompatActivity {
     WebView webView;
@@ -29,10 +31,19 @@ public class NewsFullActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
 
-        // Call your AsyncTask with the URL
+        // Call Python function to generate summary
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
 
-     new multi().execute(url);
-        //Log.i("Summary", "URL loaded in WebView: " + url);
+        try {
+           String summary = new GenerateSummaryTask().execute(url).get();
+            Log.d("URL", url);
+
+            // Now you can use the summary as needed in your Android application
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -40,41 +51,25 @@ public class NewsFullActivity extends AppCompatActivity {
         if (webView.canGoBack())
             webView.goBack();
         else
-            super.onBackPressed(); //no problem in function also
+            super.onBackPressed();
     }
 
-   //  Summary generator
-    public class multi extends AsyncTask<String, String, String> {
+    private static class GenerateSummaryTask extends AsyncTask<String, Void, String> {
 
-       @Override
-       protected String doInBackground(String... strings) {
-           try {
-               Log.i("Summary", "AsyncTask is executing.");//executed
-               String url = strings[0];
-               if (!Python.isStarted()) {
-                   Python.start(new AndroidPlatform(NewsFullActivity.this));
-               }
-               Python py = Python.getInstance();
-               PyObject pyobj = py.getModule("Summary");
-               PyObject obj = pyobj.callAttr("generate_summary", url);
-               String result = obj.toString();
-               if (result.isEmpty()) {
-                   result = "Sorry! Failed to generate a summary";
-               }
-               Log.i("Summary", result);
-               return result;
-           } catch (Exception e) {
-               Log.e("Summary", "Exception in doInBackground: " + e.getMessage(), e);
-               return "Error: " + e.getMessage();
-           }
-       }
+        @Override
+        protected String doInBackground(String... params) {
 
-       @Override
-        protected void onPostExecute(String result) {
-            // Handle the result as needed, e.g., update UI or display the summary
-            Log.i("Summary", "Summary from AsyncTask: " + result);
+                Python python = Python.getInstance();
+                PyObject pyObject = python.getModule("Summary");
+                PyObject result = pyObject.callAttr("generate_summary", params[0]);
+
+                // Log the summary for testing purposes
+                String summary = result.toString();
+                Log.d("Summary", summary);
+
+                return summary;
+            }
+
         }
     }
-}
-
 

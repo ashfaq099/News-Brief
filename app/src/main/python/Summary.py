@@ -132,14 +132,8 @@ def generate_summary(url):
         select_len = int(len(sen_tokens) * 0.50)
     else:
         select_len = int(len(sen_tokens) * 0.20)
-
     summary = nlargest(select_len, sent_scores, key=sent_scores.get)
     final_summary = [word.text for word in summary]
     summary = ' '.join(final_summary)
-
     return summary
-
-
-result_summary = generate_summary(url)
-print(result_summary)
 
