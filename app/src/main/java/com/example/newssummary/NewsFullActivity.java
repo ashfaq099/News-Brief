@@ -31,19 +31,6 @@ public class NewsFullActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
 
-        // Call Python function to generate summary
-        if (!Python.isStarted()) {
-            Python.start(new AndroidPlatform(this));
-        }
-
-        try {
-           String summary = new GenerateSummaryTask().execute(url).get();
-            Log.d("URL", url);
-
-            // Now you can use the summary as needed in your Android application
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -54,22 +41,5 @@ public class NewsFullActivity extends AppCompatActivity {
             super.onBackPressed();
     }
 
-    private static class GenerateSummaryTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-
-                Python python = Python.getInstance();
-                PyObject pyObject = python.getModule("Summary");
-                PyObject result = pyObject.callAttr("generate_summary", params[0]);
-
-                // Log the summary for testing purposes
-                String summary = result.toString();
-                Log.d("Summary", summary);
-
-                return summary;
-            }
-
-        }
     }
 
