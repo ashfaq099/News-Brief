@@ -78,7 +78,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     }
 
 
-//chatgpt
+
 void updateData(List<Article> data) {
     if (articleList == null) {
         articleList = new ArrayList<>(); // Initialize the list if it's null

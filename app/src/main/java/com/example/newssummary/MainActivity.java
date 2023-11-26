@@ -1,4 +1,3 @@
-
 package com.example.newssummary;
 
 import android.content.Intent;
@@ -74,10 +73,9 @@ public class MainActivity extends AppCompatActivity implements Selectlistener, V
 
     void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // In your MainActivity
+
         adapter = new NewsRecyclerAdapter(MainActivity.this, new ArrayList<>(), MainActivity.this);
 
-        //adapter = new NewsRecyclerAdapter(this, articleList, this);
         recyclerView.setAdapter(adapter);
     }
 

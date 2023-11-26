@@ -44,7 +44,7 @@ public class Summarization_view extends AppCompatActivity {
         img_news = findViewById(R.id.img_detail_news);
         headlines = (NewsHeadlines) getIntent().getSerializableExtra("data");
         txt_title.setText(headlines.getTitle());
-       // txt_author.setText(headlines.getAuthor());
+       //txt_author.setText(headlines.getAuthor());
         txt_time.setText(headlines.getPublishedAt());
         imgUrl = headlines.getUrlToImage();
         url = headlines.getUrl();
@@ -68,7 +68,7 @@ public class multi extends AsyncTask<String, String, String> {
     protected void onPreExecute() {
         //super.onPreExecute();
         dialog = new ProgressDialog(Summarization_view.this);
-        dialog.setTitle("Generating summary please wait...");
+        dialog.setTitle("Loading ....");
         dialog.show();
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
@@ -103,11 +103,11 @@ public class multi extends AsyncTask<String, String, String> {
 
         // Use Picasso to load the image
         Picasso.get().load(imgUrl)
-                .error(R.drawable.placeholder_error) // Set your placeholder for error
-                .placeholder(R.drawable.placeholder_loading) // Set your placeholder for loading
+               .error(R.drawable.placeholder_error)
+                .placeholder(R.drawable.placeholder_loading)
                 .into(img_news);
 
-        txt_content.setText(res);
+        txt_content.setText(res); // Show Summary
     }
 }
 
