@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "490124123537",
+    "project_id": "news-brief-12456",
+    "storage_bucket": "news-brief-12456.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490124123537:android:d290992dde5765043d8e30",
+        "android_client_info": {
+          "package_name": "com.example.newssummary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFUiTQ-wTLlT7VdQAb0WBdVpLy4tSs-Fs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
