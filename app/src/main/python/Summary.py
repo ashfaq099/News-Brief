@@ -68,14 +68,12 @@
 #
 #  result_summary = generate_summary(url)
 #  print(result_summary)
-
 import spacy
 import en_core_web_sm
 from spacy.lang.en.stop_words import STOP_WORDS
 from string import punctuation
 from heapq import nlargest
 from newspaper import Article
-
 
 def generate_summary(url):
     url1 = url
@@ -132,8 +130,18 @@ def generate_summary(url):
         select_len = int(len(sen_tokens) * 0.50)
     else:
         select_len = int(len(sen_tokens) * 0.20)
+
     summary = nlargest(select_len, sent_scores, key=sent_scores.get)
     final_summary = [word.text for word in summary]
-    summary = ' '.join(final_summary)
-    return summary
+    summary_text = ' '.join(final_summary)
 
+    # Calculate word count in summary
+    word_count_summary = len(summary_text.split())
+
+    # Calculate word count in news article
+    word_count_news = len(rawtext.split())
+
+    # Calculate percentage
+    percentage = (word_count_summary / word_count_news) * 100 if word_count_news > 0 else 0.0
+
+    return summary_text, word_count_summary, word_count_news, percentage

@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newssummary.Models.NewsHeadlines;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.kwabenaberko.newsapilib.NewsApiClient;
 import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
@@ -29,12 +32,14 @@ public class MainActivity extends AppCompatActivity implements Selectlistener, V
     LinearProgressIndicator progressIndicator;
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7;
     SearchView searchView;
-
+    FirebaseAuth auth;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
         recyclerView = findViewById(R.id.news_recycler_view);
         progressIndicator = findViewById(R.id.progress_bar);
         searchView = findViewById(R.id.search_view);

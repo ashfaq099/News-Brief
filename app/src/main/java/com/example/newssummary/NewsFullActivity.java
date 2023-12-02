@@ -41,5 +41,4 @@ public class NewsFullActivity extends AppCompatActivity {
             super.onBackPressed();
     }
 
-    }
-
+}
