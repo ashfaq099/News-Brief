@@ -145,14 +145,6 @@ jupyter notebook News_Summarization.ipynb
 
 ---
 
-
-## 📄 License
-
-This project is licensed under the **MIT License** .
-
-The MIT License allows you to freely use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, provided that the original copyright notice and this permission notice are included in all copies or substantial portions of the software.
-
-
 ## 🙏 Credits
 
 * News API — [https://newsapi.org](https://newsapi.org)
